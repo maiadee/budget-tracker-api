@@ -4,7 +4,7 @@ from users.models import User
 
 # Create your models here.
 class Budget(models.Model):
-    user = models.ForeignKey(TO=User, related_name='budgets', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='budgets', on_delete=models.CASCADE)
     total_budget = models.FloatField()
     total_spent = models.FloatField(default=0.0)
     
@@ -15,3 +15,7 @@ class Budget(models.Model):
 
     def __str__(self):
         return f"Budget for {self.user.username}: ${self.total_budget}, Spent: ${self.total_spent}, Left: ${self.total_left}"
+    
+    def clear_budget(self):
+        self.total_spent = 0  
+        self.save() 
